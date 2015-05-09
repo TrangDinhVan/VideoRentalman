@@ -28,9 +28,6 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import search.SearchManager;
-import videorentalman2.VideoRentalManager;
-
-
 
 public class VideoRentalDemo implements ActionListener {
     private JFrame mainGUI;
