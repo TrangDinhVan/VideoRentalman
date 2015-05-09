@@ -126,5 +126,8 @@ public class VipAccountManager extends Manager{
             this.displayErrorMessage("Fail to save to file Vip.dat! Something wrong!", this.getTitle());
         }
     }
+    public Vector<Vip> getList(){
+        return this.object_set;
+    }
     
 }

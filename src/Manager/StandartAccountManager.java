@@ -119,4 +119,7 @@ public class StandartAccountManager extends Manager{
             this.displayErrorMessage("Fail to save to file Standard.dat! Something wrong!", this.getTitle());
         }
     }
+    public Vector<Standard> getList(){
+        return this.object_set;
+    }
 }

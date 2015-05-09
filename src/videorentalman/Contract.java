@@ -1,12 +1,14 @@
 package videorentalman;
 
+import java.io.Serializable;
+
 /**
  * 
  * A contract contains the information about the account of the customer;
  * the video, the date, the number of days, the fee and the status(opened or closed)
  *
  */
-public class Contract implements Comparable<Contract>{
+public class Contract implements Comparable<Contract>, Serializable{
 	private Account acc;
 	private Video vid;
 	private String date;

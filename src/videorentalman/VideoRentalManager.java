@@ -1,6 +1,10 @@
 package videorentalman;
 
 import java.util.*;
+import videorentalman.Account;
+import videorentalman.Contract;
+import videorentalman.DuplicateException;
+import videorentalman.Video;
 
 public class VideoRentalManager {
     private List<Contract> conlist= new ArrayList<Contract>();

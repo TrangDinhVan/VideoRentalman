@@ -178,7 +178,6 @@ public abstract class Manager implements ActionListener {
     }
     //Shutdown form
     public void shutDown() {
-        save();
         gui.dispose();
     }
 }

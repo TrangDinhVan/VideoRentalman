@@ -131,5 +131,9 @@ public class VideoManager extends Manager{
             this.displayErrorMessage("Fail to save to file Vdieo.dat! Something wrong!", this.getTitle());
         }
     }
+
+    Vector<Video> getList() {
+        return this.object_set;
+    }
     
 }

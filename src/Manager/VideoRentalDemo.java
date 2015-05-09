@@ -5,7 +5,6 @@ import videorentalman.Contract;
 import videorentalman.Standard;
 import videorentalman.TextIO;
 import videorentalman.Video;
-import videorentalman.VideoRentalManager;
 import videorentalman.Vip;
 //Import neccesary interface libraries
 import java.awt.Color;
@@ -35,6 +34,7 @@ import javax.swing.Timer;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -46,15 +46,32 @@ public class VideoRentalDemo implements ActionListener {
     private static VideoManager m_video;
     private static StandartAccountManager m_standard;
     private static VipAccountManager m_vip;
+    private static RentalContractManager m_contract;
     private static final String IMG_PATH = "src/images/image01.jpg";
     public static void main(String [] args) throws IOException{
         VideoRentalDemo app = new VideoRentalDemo();
+        //Start Module Video Manager
         m_video = new VideoManager("Video Manager", "Enter Video Detail", 400, 280, 400, 400);
         m_video.startUp();
+        //Start Module Stardard Account Manager
         m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 400, 280, 400, 400);
         m_standard.startUp();
+        //Staart Module Vip Account Manager
         m_vip = new VipAccountManager("Vip Account Manager", "Enter Vip Account Detail", 400, 280, 400, 400);
         m_vip.startUp();
+        //Start Module Rental Contract Manager
+        Vector<Account> account_set = new Vector<Account>();
+        for( Standard s : m_standard.getList() ){
+            account_set.add(s);
+        }
+        for( Vip v : m_vip.getList() ){
+            account_set.add(v);
+        }
+        m_contract = new RentalContractManager("Rental Contract Manager", "Enter Contract Detail", 
+                600, 380, 400, 400, account_set, m_video.getList());
+        m_contract.renderBox();
+        m_contract.startUp();
+        //Start App
         app.createGUI();
         app.display();
 //        Account a1 = new Standard("A","A@gmail.com");
@@ -137,7 +154,7 @@ public class VideoRentalDemo implements ActionListener {
         JMenuItem m_item_mana_Stu = new JMenuItem("Manage Video");
         JMenuItem m_item_mana_Cou = new JMenuItem("Manage Standard Account");
         JMenuItem m_item_mana_Enr = new JMenuItem("Manage Vip Account");
-        JMenuItem m_item_mana_Con = new JMenuItem("Manage Contract");
+        JMenuItem m_item_mana_Con = new JMenuItem("Manage Rental Contract");
         JMenuItem m_item_mana_Search = new JMenuItem("Search for Object");
         //menu File and its items
         JMenu menu_file = new JMenu("File");
@@ -201,7 +218,10 @@ public class VideoRentalDemo implements ActionListener {
         String cmd = e.getActionCommand();
         switch (cmd) {
             case "Save":
-                
+                m_video.save();
+                m_standard.save();
+                m_vip.save();
+                m_contract.save();
                 break;
             case "Exit":
                 shutDown();
@@ -216,8 +236,8 @@ public class VideoRentalDemo implements ActionListener {
                 m_vip.display();
                 break;
             }
-            case "Raw Enrollments":
-               
+            case "Manage Rental Contract":
+               m_contract.display();
                 break;
             case "Assessed Enrollments":
                 
@@ -234,6 +254,7 @@ public class VideoRentalDemo implements ActionListener {
         m_video.shutDown();
         m_standard.shutDown();
         m_vip.shutDown();
+        m_contract.shutDown();
         mainGUI.dispose();
         System.exit(0);
     }
