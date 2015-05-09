@@ -45,6 +45,7 @@ public class VideoRentalDemo implements ActionListener {
     private JFrame mainGUI;
     private static VideoManager m_video;
     private static StandartAccountManager m_standard;
+    private static VipAccountManager m_vip;
     private static final String IMG_PATH = "src/images/image01.jpg";
     public static void main(String [] args) throws IOException{
         VideoRentalDemo app = new VideoRentalDemo();
@@ -52,6 +53,8 @@ public class VideoRentalDemo implements ActionListener {
         m_video.startUp();
         m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 400, 280, 400, 400);
         m_standard.startUp();
+        m_vip = new VipAccountManager("Vip Account Manager", "Enter Vip Account Detail", 400, 280, 400, 400);
+        m_vip.startUp();
         app.createGUI();
         app.display();
 //        Account a1 = new Standard("A","A@gmail.com");
@@ -209,8 +212,8 @@ public class VideoRentalDemo implements ActionListener {
             case "Manage Standard Account":
                 m_standard.display();
                 break;
-            case "Manage Enrollment": {
-                
+            case "Manage Vip Account": {
+                m_vip.display();
                 break;
             }
             case "Raw Enrollments":
@@ -230,6 +233,7 @@ public class VideoRentalDemo implements ActionListener {
     private void shutDown() {
         m_video.shutDown();
         m_standard.shutDown();
+        m_vip.shutDown();
         mainGUI.dispose();
         System.exit(0);
     }
