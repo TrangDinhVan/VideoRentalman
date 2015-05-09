@@ -2,7 +2,7 @@ package videorentalman;
 
 import java.io.Serializable;
 
-public class Video implements Serializable{
+public class Video implements Serializable, Document{
     private static int count = 0;
     private String id;
     private String name;
@@ -33,5 +33,15 @@ public class Video implements Serializable{
     public String toString(){
        return name + " - " + disk + " - " + price;
     }
-	
+
+    @Override
+    public String toHtmlDoc() {
+        String VideoDoc;
+        VideoDoc = "<html>";
+        VideoDoc += "<head><title>Video:" + this.disk + " - " + this.name + "</title></head>";
+        VideoDoc += "<body>";
+        VideoDoc += this.id + " " + this.name + " " + this.disk + " " + this.price;
+        VideoDoc += "</body></html>";
+        return VideoDoc;
+    }
 }

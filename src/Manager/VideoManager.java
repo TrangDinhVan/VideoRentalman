@@ -19,6 +19,7 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import search.SearchManager;
 import videorentalman.NotPossibleException;
 import videorentalman.*;
 
@@ -30,8 +31,8 @@ public class VideoManager extends Manager{
     private JPanel panel_middle;
     private JTextField nameField, noField, feeField;
     private Vector<Video> object_set;
-    public VideoManager(String title, String titleText, int width, int height, int x, int y) {
-        super(title, titleText, width, height, x, y);
+    public VideoManager(String title, String titleText, int width, int height, int x, int y, SearchManager Search) {
+        super(title, titleText, width, height, x, y, Search);
         object_set = new Vector<Video>();
     }
 
@@ -74,6 +75,8 @@ public class VideoManager extends Manager{
             }else{
                 object_set.add(new Video(name, no, fee));
                 System.out.printf("\nVideo added successfully.\nNumber of videos: %d", object_set.size());
+                this.SearchManager.objectCreated(new Video(name, no, fee));
+                this.objectListeners.add(SearchManager);
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -99,6 +102,8 @@ public class VideoManager extends Manager{
                     temp = (Video) ois.readObject();
                     Video v = new Video(temp.getName(),temp.getDisk(),temp.getPrice());
                     this.object_set.add(v);
+                    this.SearchManager.objectCreated(v);
+                    this.objectListeners.add(SearchManager);
                     System.out.println(v);
                 }
             } catch (EOFException e) {

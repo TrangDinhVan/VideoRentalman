@@ -26,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import search.SearchManager;
 /**
  *
  * @author Khai
@@ -39,12 +40,17 @@ public abstract class Manager implements ActionListener {
     private Dimension dim;
     private Point location;
     private JPanel p_middle;
+    protected SearchManager SearchManager;
+    public List<SearchManager> objectListeners;
     //Init with a basic GUI
-    public Manager(String title, String titleText, int width, int height, int x, int y){
+    public Manager(String title, String titleText, int width, int height, int x, int y, SearchManager Search){
         this.title = title;
         this.titleText = titleText;
         this.dim = new Dimension(width, height);
         this.location = new Point(x, y);
+        this.SearchManager = Search;
+        objectListeners = new LinkedList();
+        objectListeners.add(Search);
         createGUI();
     }
     //Create GUI

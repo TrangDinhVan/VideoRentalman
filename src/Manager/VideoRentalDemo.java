@@ -1,20 +1,11 @@
 package Manager;
 //Import domain classes
 import videorentalman.Account;
-import videorentalman.Contract;
 import videorentalman.Standard;
-import videorentalman.TextIO;
-import videorentalman.Video;
 import videorentalman.Vip;
 //Import neccesary interface libraries
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,12 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.io.File;
-import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.JOptionPane;
-import javax.swing.Timer;
 //Inport Extra libraries
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,6 +23,7 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import search.SearchManager;
 
 
 
@@ -47,17 +33,25 @@ public class VideoRentalDemo implements ActionListener {
     private static StandartAccountManager m_standard;
     private static VipAccountManager m_vip;
     private static RentalContractManager m_contract;
-    private static final String IMG_PATH = "src/images/image01.jpg";
+    private static SearchManager m_search;
+    private static final String IMG_PATH_01 = "src/images/01.jpg";
+    private static final String IMG_PATH_02 = "src/images/02.jpg";
     public static void main(String [] args) throws IOException{
         VideoRentalDemo app = new VideoRentalDemo();
+        //Search Module
+        m_search = new SearchManager("Search Functions", "Search by keywords",
+                500, 600, 450, 250, null);
         //Start Module Video Manager
-        m_video = new VideoManager("Video Manager", "Enter Video Detail", 400, 280, 400, 400);
+        m_video = new VideoManager("Video Manager", "Enter Video Detail", 
+                400, 280, 400, 400, m_search);
         m_video.startUp();
         //Start Module Stardard Account Manager
-        m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 400, 280, 400, 400);
+        m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 
+                400, 280, 400, 400, m_search);
         m_standard.startUp();
         //Staart Module Vip Account Manager
-        m_vip = new VipAccountManager("Vip Account Manager", "Enter Vip Account Detail", 400, 280, 400, 400);
+        m_vip = new VipAccountManager("Vip Account Manager", "Enter Vip Account Detail", 
+                400, 280, 400, 400, m_search);
         m_vip.startUp();
         //Start Module Rental Contract Manager
         Vector<Account> account_set = new Vector<Account>();
@@ -68,7 +62,7 @@ public class VideoRentalDemo implements ActionListener {
             account_set.add(v);
         }
         m_contract = new RentalContractManager("Rental Contract Manager", "Enter Contract Detail", 
-                600, 380, 400, 400, account_set, m_video.getList());
+                600, 380, 400, 400, account_set, m_video.getList(), m_search);
         m_contract.renderBox();
         m_contract.startUp();
         //Start App
@@ -183,8 +177,8 @@ public class VideoRentalDemo implements ActionListener {
         menu_tool.add(m_item_mana_Stu);
         menu_tool.add(m_item_mana_Cou);
         menu_tool.add(m_item_mana_Enr);
-        menu_tool.add(m_item_mana_Search);
         menu_tool.add(m_item_mana_Con);
+        menu_tool.add(m_item_mana_Search);
         menu_tool.setMnemonic('T');
         //Menu Report
         item_report1.addActionListener(this);
@@ -205,9 +199,10 @@ public class VideoRentalDemo implements ActionListener {
     //display students' pictures
     public void createMiddle() throws IOException{
         JPanel middle = new JPanel();
-        BufferedImage img = ImageIO.read(new File(IMG_PATH));
-        middle.add(new JLabel(new ImageIcon(img)), new BorderLayout().LINE_START);
-        middle.add(new JLabel(new ImageIcon(img)), new BorderLayout().LINE_END);
+        BufferedImage img_01 = ImageIO.read(new File(IMG_PATH_01));
+        BufferedImage img_02 = ImageIO.read(new File(IMG_PATH_02));
+        middle.add(new JLabel(new ImageIcon(img_01)), new BorderLayout().LINE_START);
+        middle.add(new JLabel(new ImageIcon(img_02)), new BorderLayout().LINE_END);
         mainGUI.getContentPane().add(middle, new BorderLayout().CENTER);
     }
     //display the application
@@ -239,11 +234,8 @@ public class VideoRentalDemo implements ActionListener {
             case "Manage Rental Contract":
                m_contract.display();
                 break;
-            case "Assessed Enrollments":
-                
-                break;
-            case "Search":
-                
+            case "Search for Object":
+                m_search.display();
                 break;
             default:
                 System.out.println("No command found!");

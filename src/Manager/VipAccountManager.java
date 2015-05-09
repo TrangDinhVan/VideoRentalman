@@ -30,8 +30,8 @@ public class VipAccountManager extends Manager{
     private JTextField nameField, mailField, addField;
     private Vector<Vip> object_set;
 
-    public VipAccountManager(String title, String titleText, int width, int height, int x, int y) {
-        super(title, titleText, width, height, x, y);
+    public VipAccountManager(String title, String titleText, int width, int height, int x, int y, search.SearchManager Search) {
+        super(title, titleText, width, height, x, y, Search);
         object_set = new Vector<Vip>();
     }
 
@@ -67,8 +67,12 @@ public class VipAccountManager extends Manager{
             if (name == null) {
                 throw new NotPossibleException("Name must not be empty");
             } else {
+                //Create new Vip account and add to list 
                 object_set.add(new Vip(name, mail, add));
                 System.out.printf("\nVip Account added successfully.");
+                //Add vip account created to Search Engine
+                this.SearchManager.objectCreated(new Vip(name, mail, add));
+                this.objectListeners.add(SearchManager);
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -94,6 +98,9 @@ public class VipAccountManager extends Manager{
                     temp = (Vip) ois.readObject();
                     Vip v = new Vip(temp.getName(), temp.getEmail(), temp.getAddress());
                     this.object_set.add(v);
+                    //Add to Search Engine
+                    this.SearchManager.objectCreated(v);
+                    this.objectListeners.add(SearchManager);
                     System.out.println(v);
                 }
             } catch (EOFException e) {

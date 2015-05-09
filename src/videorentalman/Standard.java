@@ -1,6 +1,6 @@
 package videorentalman;
 
-public class Standard extends Account{
+public class Standard extends Account implements Document{
 	
     public Standard(String n, String e){
             super(n,e);
@@ -10,5 +10,15 @@ public class Standard extends Account{
     public String toString(){
         return "Account Standard: <" + super.getID() +","+ super.getName() +","+
             super.getEmail() +">";
+    }
+    @Override
+    public String toHtmlDoc() {
+        String StandardDoc;
+        StandardDoc = "<html>";
+        StandardDoc += "<head><title>Standard:" + getName() + " - " + getEmail() + "</title></head>";
+        StandardDoc += "<body>";
+        StandardDoc += getName() + " " + getEmail();
+        StandardDoc += "</body></html>";
+        return StandardDoc;
     }
 }

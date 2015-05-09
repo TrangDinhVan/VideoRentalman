@@ -35,15 +35,14 @@ public class RentalContractManager extends Manager{
     private Vector<Account> account_set = new Vector<Account>();
     private Vector<Video> video_set;
 
-    public RentalContractManager(String title, String titleText, int width, int height, 
-            int x, int y, 
-            Vector<Account> v_account, Vector<Video> v_video) {
-        super(title, titleText, width, height, x, y);
+    public RentalContractManager(String title, String titleText, int width, int height, int x, int y, 
+            Vector<Account> v_account, Vector<Video> v_video, search.SearchManager Search) {
+        super(title, titleText, width, height, x, y, Search);
         object_set = new Vector<Contract>();
         account_set = v_account;
         video_set = v_video;
-        this.clearGUI();
     }
+
 
     @Override
     protected void createMiddlePanel() {
@@ -78,10 +77,14 @@ public class RentalContractManager extends Manager{
                     || daysField.getText().length() < 1 ){
                 throw new NotPossibleException("Don't leave Date and Days empty!");
             }else{
+                //Create contract and add to the list
                 String date = dateField.getText();
                 int days = Integer.parseInt(daysField.getText());
                 object_set.add(new Contract((Account) a, (Video) v, date, days, (Boolean) status));
                 System.out.println("Contact added successfully.");
+                //Add to Search Engine
+                this.SearchManager.objectCreated(new Contract((Account) a, (Video) v, date, days, (Boolean) status));
+                this.objectListeners.add(SearchManager);
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -107,6 +110,9 @@ public class RentalContractManager extends Manager{
                     temp = (Contract) ois.readObject();
                     Contract v = new Contract(temp.getAccount(), temp.getVideo(), temp.getDate(), temp.getDays(), temp.getStatus());
                     this.object_set.add(v);
+                    //Add to Search Engine
+                    this.SearchManager.objectCreated(v);
+                    this.objectListeners.add(SearchManager);
                     System.out.println(v);
                 }
             } catch (EOFException e) {

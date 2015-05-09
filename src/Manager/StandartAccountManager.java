@@ -30,8 +30,8 @@ public class StandartAccountManager extends Manager{
     private JPanel panel_middle;
     private JTextField nameField, mailField;
 
-    public StandartAccountManager(String title, String titleText, int width, int height, int x, int y) {
-        super(title, titleText, width, height, x, y);
+    public StandartAccountManager(String title, String titleText, int width, int height, int x, int y, search.SearchManager Search) {
+        super(title, titleText, width, height, x, y, Search);
         object_set = new Vector<Standard>();
     }
 
@@ -60,8 +60,12 @@ public class StandartAccountManager extends Manager{
             if( name == null ){
                 throw new NotPossibleException("Name must not be empty");
             }else{
+                //Create new Standard Account and add to list
                 object_set.add(new Standard(name, mail));
                 System.out.printf("\nStandard Account added successfully.");
+                //Add Stardard Account created to Search Engine
+                this.SearchManager.objectCreated(new Standard(name, mail));
+                this.objectListeners.add(SearchManager);
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -87,6 +91,9 @@ public class StandartAccountManager extends Manager{
                     temp = (Standard) ois.readObject();
                     Standard v = new Standard(temp.getName(),temp.getEmail());
                     this.object_set.add(v);
+                    //Add to Search Engine
+                    this.SearchManager.objectCreated(v);
+                    this.objectListeners.add(SearchManager);
                     System.out.println(v);
                 }
             } catch (EOFException e) {
