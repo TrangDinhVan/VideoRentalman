@@ -1,5 +1,7 @@
 package videorentalman;
 
+import java.io.Serializable;
+
 /**
  * 
  * An account contain the information about the customer: id, name and email
@@ -11,7 +13,7 @@ package videorentalman;
  *
  *@object  A typical object:  Account a <id,name,email>
  */
-public class Account {
+public class Account implements Serializable {
 	private String id;
 	private static int count = 5;
 	private String name;

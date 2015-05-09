@@ -21,59 +21,47 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import videorentalman.NotPossibleException;
 import videorentalman.*;
-
 /**
  *
  * @author Khai
  */
-public class VideoManager extends Manager{
+public class StandartAccountManager extends Manager{
+    private Vector<Standard> object_set;
     private JPanel panel_middle;
-    private JTextField nameField, noField, feeField;
-    private Vector<Video> object_set;
-    public VideoManager(String title, String titleText, int width, int height, int x, int y) {
+    private JTextField nameField, mailField;
+
+    public StandartAccountManager(String title, String titleText, int width, int height, int x, int y) {
         super(title, titleText, width, height, x, y);
-        object_set = new Vector<Video>();
+        object_set = new Vector<Standard>();
     }
 
     @Override
     protected void createMiddlePanel() {
         panel_middle = new JPanel();
         panel_middle.setLayout(new GridLayout(3, 2));
-        //Add field name
-        JLabel lb_name = new JLabel("Video Name");
+        //Add name field
+        panel_middle.add(new JLabel("Name"));
         nameField = new JTextField();
-        panel_middle.add(lb_name);
         panel_middle.add(nameField);
-        //Add field no.
-        panel_middle.add(new JLabel("No. of Disk"));
-        noField = new JTextField();
-        panel_middle.add(noField);
-        //Add field rental fee
-        panel_middle.add(new JLabel("Rental Fee"));
-        feeField = new JTextField();
-        panel_middle.add(feeField);
-        
-        panel_middle.setOpaque(true);
+        //Add mail field
+        panel_middle.add(new JLabel("Email"));
+        mailField = new JTextField();
+        panel_middle.add(mailField);
         this.gui.getContentPane().add(panel_middle);
     }
 
     @Override
     public void doTask() throws NotPossibleException {
         try {
-            String name = ( nameField.getText().length() > 0 ) 
-                    ? nameField.getText() 
-                    : null;//name
-            Integer no = ( noField.getText().length() > 0 )
-                    ? Integer.parseInt(noField.getText())
-                    : null;//no
-            Float fee = ( feeField.getText().length() > 0 )
-                    ? Float.parseFloat(feeField.getText())
-                    : null;//fee
-            if( name == null || no == null || fee == null ){
-                throw new NotPossibleException("All field must not be empty\nOr No. Disk and Fee must be a number!");
+            String name = ( nameField.getText().length() > 0 )
+                    ? nameField.getText() : null;
+            String mail = ( mailField.getText().length() > 0 )
+                    ? mailField.getText() : null;
+            if( name == null ){
+                throw new NotPossibleException("Name must not be empty");
             }else{
-                object_set.add(new Video(name, no, fee));
-                System.out.printf("\nVideo added successfully.\nNumber of videos: %d", object_set.size());
+                object_set.add(new Standard(name, mail));
+                System.out.printf("\nStandard Account added successfully.");
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -88,16 +76,16 @@ public class VideoManager extends Manager{
 
     @Override
     public void startUp() {
-        System.out.println("Load from Video.dat -------------------------------------------------------");
-        File f = new File("Video.dat");
+        System.out.println("Load from Standard.dat -------------------------------------------------------");
+        File f = new File("Standard.dat");
         try {
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            Video temp;
+            Standard temp;
             try {
                 while (true) {
-                    temp = (Video) ois.readObject();
-                    Video v = new Video(temp.getName(),temp.getDisk(),temp.getPrice());
+                    temp = (Standard) ois.readObject();
+                    Standard v = new Standard(temp.getName(),temp.getEmail());
                     this.object_set.add(v);
                     System.out.println(v);
                 }
@@ -105,8 +93,8 @@ public class VideoManager extends Manager{
             }
             ois.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Cannot find Video.dat!");
-            this.displayErrorMessage("Cannot find Video.dat", this.getTitle());
+            System.out.println("Cannot find Standard.dat!");
+            this.displayErrorMessage("Cannot find Standard.dat", this.getTitle());
         } catch (ClassNotFoundException e) {
             System.out.println("Problems with file input.");
         } catch (IOException e) {
@@ -117,19 +105,18 @@ public class VideoManager extends Manager{
     @Override
     public void save() {
         try {
-            File f = new File("Video.dat");
+            File f = new File("Standard.dat");
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             for (int i = 0; i < object_set.size(); i++) {
-                Video temp = (Video) object_set.get(i);
+                Standard temp = (Standard) object_set.get(i);
                 oos.writeObject(temp);
             }
             oos.close();
-            this.displayMessage("File Video.dat saved!", this.getTitle());
+            this.displayMessage("File Standard.dat saved!", this.getTitle());
         } catch (IOException e) {
             e.printStackTrace();
-            this.displayErrorMessage("Fail to save to file Vdieo.dat! Something wrong!", this.getTitle());
+            this.displayErrorMessage("Fail to save to file Standard.dat! Something wrong!", this.getTitle());
         }
     }
-    
 }

@@ -44,11 +44,14 @@ import javax.swing.ImageIcon;
 public class VideoRentalDemo implements ActionListener {
     private JFrame mainGUI;
     private static VideoManager m_video;
+    private static StandartAccountManager m_standard;
     private static final String IMG_PATH = "src/images/image01.jpg";
     public static void main(String [] args) throws IOException{
         VideoRentalDemo app = new VideoRentalDemo();
         m_video = new VideoManager("Video Manager", "Enter Video Detail", 400, 280, 400, 400);
         m_video.startUp();
+        m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 400, 280, 400, 400);
+        m_standard.startUp();
         app.createGUI();
         app.display();
 //        Account a1 = new Standard("A","A@gmail.com");
@@ -129,7 +132,7 @@ public class VideoRentalDemo implements ActionListener {
         //menu Toos and its items
         JMenu menu_tool = new JMenu("Tools");
         JMenuItem m_item_mana_Stu = new JMenuItem("Manage Video");
-        JMenuItem m_item_mana_Cou = new JMenuItem("Manage Standart Account");
+        JMenuItem m_item_mana_Cou = new JMenuItem("Manage Standard Account");
         JMenuItem m_item_mana_Enr = new JMenuItem("Manage Vip Account");
         JMenuItem m_item_mana_Con = new JMenuItem("Manage Contract");
         JMenuItem m_item_mana_Search = new JMenuItem("Search for Object");
@@ -203,8 +206,8 @@ public class VideoRentalDemo implements ActionListener {
             case "Manage Video":
                 m_video.display();
                 break;
-            case "Manage Course":
-                
+            case "Manage Standard Account":
+                m_standard.display();
                 break;
             case "Manage Enrollment": {
                 
@@ -226,6 +229,7 @@ public class VideoRentalDemo implements ActionListener {
     //Save data and exit app
     private void shutDown() {
         m_video.shutDown();
+        m_standard.shutDown();
         mainGUI.dispose();
         System.exit(0);
     }

@@ -11,13 +11,14 @@ public class Video implements Serializable{
 
     //constructor
     public Video(String n, int d, float p){
-            this.name = n;
-            this.disk = d;
-            this.price = p;
-            count++;
-            this.id = "V100" + Integer.toString(count);
+        this.name = n;
+        this.disk = d;
+        this.price = p;
+        count++;
+        this.id = "V100" + Integer.toString(count);
     }
 
+    
     //getter
     public String getID() {return this.id;}
     public String getName() {return this.name;}
