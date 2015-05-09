@@ -66,6 +66,7 @@ public class StandartAccountManager extends Manager{
                 //Add Stardard Account created to Search Engine
                 this.SearchManager.objectCreated(new Standard(name, mail));
                 this.objectListeners.add(SearchManager);
+                this.displayMessage("Standard Account added successfully", this.getTitle());
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {

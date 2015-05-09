@@ -110,6 +110,7 @@ public abstract class Manager implements ActionListener {
      * @effects show <tt>gui</tt>
      */
     public void display() {
+        clearGUI();
         this.gui.setVisible(true);
     }
 

@@ -40,18 +40,18 @@ public class VideoRentalDemo implements ActionListener {
         VideoRentalDemo app = new VideoRentalDemo();
         //Search Module
         m_search = new SearchManager("Search Functions", "Search by keywords",
-                500, 600, 450, 250, null);
+                500, 600, 600, 10, null);
         //Start Module Video Manager
         m_video = new VideoManager("Video Manager", "Enter Video Detail", 
-                400, 280, 400, 400, m_search);
+                400, 280, 600, 140, m_search);
         m_video.startUp();
         //Start Module Stardard Account Manager
         m_standard = new StandartAccountManager("Standard Account Manager", "Enter Standard Account Detail", 
-                400, 280, 400, 400, m_search);
+                400, 280, 600, 140, m_search);
         m_standard.startUp();
         //Staart Module Vip Account Manager
         m_vip = new VipAccountManager("Vip Account Manager", "Enter Vip Account Detail", 
-                400, 280, 400, 400, m_search);
+                400, 280, 600, 140, m_search);
         m_vip.startUp();
         //Start Module Rental Contract Manager
         Vector<Account> account_set = new Vector<Account>();
@@ -62,8 +62,8 @@ public class VideoRentalDemo implements ActionListener {
             account_set.add(v);
         }
         m_contract = new RentalContractManager("Rental Contract Manager", "Enter Contract Detail", 
-                600, 380, 400, 400, account_set, m_video.getList(), m_search);
-        m_contract.renderBox();
+                600, 380, 600, 40, account_set, m_video.getList(), m_search);
+        m_contract.renderBox(account_set,m_video.getList());
         m_contract.startUp();
         //Start App
         app.createGUI();
@@ -232,6 +232,15 @@ public class VideoRentalDemo implements ActionListener {
                 break;
             }
             case "Manage Rental Contract":
+                //Start Module Rental Contract Manager
+                Vector<Account> account_set = new Vector<Account>();
+                for( Standard s : m_standard.getList() ){
+                    account_set.add(s);
+                }
+                for( Vip v : m_vip.getList() ){
+                    account_set.add(v);
+                }
+               m_contract.renderBox(account_set,m_video.getList());
                m_contract.display();
                 break;
             case "Search for Object":

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * the video, the date, the number of days, the fee and the status(opened or closed)
  *
  */
-public class Contract implements Comparable<Contract>, Serializable{
+public class Contract implements Comparable<Contract>, Serializable, Document{
 	private Account acc;
 	private Video vid;
 	private String date;
@@ -61,4 +61,15 @@ public class Contract implements Comparable<Contract>, Serializable{
 		else
 			return Float.compare(this.fee,c.fee);
 	}
+
+    @Override
+    public String toHtmlDoc() {
+        String ContractDoc;
+        ContractDoc = "<html>";
+        ContractDoc += "<head><title>Contract:" + getAccount().getName() + " - " + getVideo().getName() + "</title></head>";
+        ContractDoc += "<body>";
+        ContractDoc += getAccount().toString() + " " + getVideo().toString();
+        ContractDoc += "</body></html>";
+        return ContractDoc;
+    }
 }

@@ -77,6 +77,7 @@ public class VideoManager extends Manager{
                 System.out.printf("\nVideo added successfully.\nNumber of videos: %d", object_set.size());
                 this.SearchManager.objectCreated(new Video(name, no, fee));
                 this.objectListeners.add(SearchManager);
+                this.displayMessage("Video added successfully", this.getTitle());
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {

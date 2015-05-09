@@ -48,6 +48,14 @@ public class RentalContractManager extends Manager{
     protected void createMiddlePanel() {
         panel_middle = new JPanel();
         panel_middle.setLayout(new GridLayout(6, 5));
+        //Add Account Box
+        panel_middle.add(new JLabel("Choose Account"));
+        accountBox = new JComboBox();
+        panel_middle.add(accountBox);
+        //Add Video Box
+        panel_middle.add(new JLabel("Choose Video"));
+        videoBox = new JComboBox();
+        panel_middle.add(this.videoBox);
         //Add date field
         panel_middle.add(new JLabel("Date"));
         dateField = new JTextField();
@@ -85,6 +93,7 @@ public class RentalContractManager extends Manager{
                 //Add to Search Engine
                 this.SearchManager.objectCreated(new Contract((Account) a, (Video) v, date, days, (Boolean) status));
                 this.objectListeners.add(SearchManager);
+                this.displayMessage("Contact added successfully.", this.getTitle());
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
@@ -145,16 +154,17 @@ public class RentalContractManager extends Manager{
             this.displayErrorMessage("Fail to save to file Contract.dat! Something wrong!", this.getTitle());
         }
     }
-    
-    public void renderBox(){
-        //Add Account Box
-        panel_middle.add(new JLabel("Choose Account"));
-        accountBox = new JComboBox(account_set);
-        panel_middle.add(accountBox);
-        //Add Video Box
-        panel_middle.add(new JLabel("Choose Video"));
-        videoBox = new JComboBox(video_set);
-        panel_middle.add(this.videoBox);
+    //Add data of video and account to the combobox when create a new contract
+    public void renderBox(Vector<Account> v1, Vector<Video> v2){
+        //Reset
+        accountBox.removeAllItems();
+        videoBox.removeAllItems();
+        for( Account a : v1 ){
+            accountBox.addItem(a);
+        }
+        for( Video v : v2 ){
+            videoBox.addItem(v);
+        }
     }
     
 }

@@ -73,6 +73,7 @@ public class VipAccountManager extends Manager{
                 //Add vip account created to Search Engine
                 this.SearchManager.objectCreated(new Vip(name, mail, add));
                 this.objectListeners.add(SearchManager);
+                this.displayMessage("Vip Account added successfully", this.getTitle());
                 this.gui.setVisible(false);
             }
         } catch (Exception e) {
