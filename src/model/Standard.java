@@ -1,4 +1,7 @@
-package videorentalman;
+package model;
+
+import model.Document;
+import model.Account;
 
 public class Standard extends Account implements Document{
 	

@@ -1,5 +1,6 @@
-package videorentalman;
+package model;
 
+import model.Document;
 import java.io.Serializable;
 
 public class Video implements Serializable, Document{

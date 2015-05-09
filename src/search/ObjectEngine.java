@@ -7,7 +7,7 @@ import kengine.Doc;
 import kengine.Engine;
 import kengine.NotPossibleException;
 import kengine.Query;
-import videorentalman.Document;
+import model.Document;
 
 
 /**

@@ -1,6 +1,7 @@
-package videorentalman;
+package model;
 
 import java.io.Serializable;
+import videorentalman2.NotPossibleException;
 
 /**
  * 

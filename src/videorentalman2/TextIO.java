@@ -1,4 +1,4 @@
-package videorentalman;
+package videorentalman2;
 
 
 import java.io.BufferedReader;

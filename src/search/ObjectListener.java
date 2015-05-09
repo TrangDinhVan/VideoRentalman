@@ -1,6 +1,6 @@
 package search;
 
-import videorentalman.NotPossibleException;
+import videorentalman2.NotPossibleException;
 
 
 /**

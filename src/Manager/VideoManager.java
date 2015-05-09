@@ -5,6 +5,7 @@
  */
 package Manager;
 
+import model.Video;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import java.io.EOFException;
@@ -20,8 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import search.SearchManager;
-import videorentalman.NotPossibleException;
-import videorentalman.*;
+import videorentalman2.NotPossibleException;
 
 /**
  *
@@ -138,7 +138,7 @@ public class VideoManager extends Manager{
         }
     }
 
-    Vector<Video> getList() {
+    public Vector<Video> getList() {
         return this.object_set;
     }
     

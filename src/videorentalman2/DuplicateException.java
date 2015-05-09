@@ -1,4 +1,4 @@
-package videorentalman;
+package videorentalman2;
 
 /**
  * @overview Represents exceptions that are thrown when there are duplicate

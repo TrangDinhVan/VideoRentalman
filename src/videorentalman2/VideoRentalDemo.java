@@ -1,8 +1,12 @@
-package Manager;
+package videorentalman2;
 //Import domain classes
-import videorentalman.Account;
-import videorentalman.Standard;
-import videorentalman.Vip;
+import Manager.ContractManager;
+import Manager.StandartAccountManager;
+import Manager.VideoManager;
+import Manager.VipAccountManager;
+import model.Account;
+import model.Standard;
+import model.Vip;
 //Import neccesary interface libraries
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +28,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import search.SearchManager;
+import videorentalman2.VideoRentalManager;
 
 
 
@@ -32,7 +37,7 @@ public class VideoRentalDemo implements ActionListener {
     private static VideoManager m_video;
     private static StandartAccountManager m_standard;
     private static VipAccountManager m_vip;
-    private static RentalContractManager m_contract;
+    private static ContractManager m_contract;
     private static SearchManager m_search;
     private static final String IMG_PATH_01 = "src/images/01.jpg";
     private static final String IMG_PATH_02 = "src/images/02.jpg";
@@ -61,7 +66,7 @@ public class VideoRentalDemo implements ActionListener {
         for( Vip v : m_vip.getList() ){
             account_set.add(v);
         }
-        m_contract = new RentalContractManager("Rental Contract Manager", "Enter Contract Detail", 
+        m_contract = new ContractManager("Rental Contract Manager", "Enter Contract Detail", 
                 600, 380, 600, 40, account_set, m_video.getList(), m_search);
         m_contract.renderBox(account_set,m_video.getList());
         m_contract.startUp();
@@ -141,13 +146,14 @@ public class VideoRentalDemo implements ActionListener {
         JMenuBar menu_main = new JMenuBar();
         //menu Report and its items
         JMenu menu_report = new JMenu("Report");
-        JMenuItem item_report1 = new JMenuItem("Normal Report");
-        JMenuItem item_report2 = new JMenuItem("Sorted Report");
+        JMenuItem item_report1 = new JMenuItem("All Contracts");
+        JMenuItem item_report2 = new JMenuItem("Open Contracts");
+        JMenuItem item_report3 = new JMenuItem("Sorted Open Contracts");
         //menu Toos and its items
         JMenu menu_tool = new JMenu("Tools");
-        JMenuItem m_item_mana_Stu = new JMenuItem("Manage Video");
-        JMenuItem m_item_mana_Cou = new JMenuItem("Manage Standard Account");
-        JMenuItem m_item_mana_Enr = new JMenuItem("Manage Vip Account");
+        JMenuItem m_item_mana_Video = new JMenuItem("Manage Video");
+        JMenuItem m_item_mana_Standard = new JMenuItem("Manage Standard Account");
+        JMenuItem m_item_mana_Vip = new JMenuItem("Manage Vip Account");
         JMenuItem m_item_mana_Con = new JMenuItem("Manage Rental Contract");
         JMenuItem m_item_mana_Search = new JMenuItem("Search for Object");
         //menu File and its items
@@ -164,29 +170,32 @@ public class VideoRentalDemo implements ActionListener {
         menu_file.add(m_item_exit);
         menu_file.setMnemonic('F');//set shortcut (ATL+F)
         //Menu Tools
-        m_item_mana_Stu.addActionListener(this);
-        m_item_mana_Stu.setMnemonic('u');
-        m_item_mana_Cou.addActionListener(this);
-        m_item_mana_Cou.setMnemonic('C');
-        m_item_mana_Enr.addActionListener(this);
-        m_item_mana_Enr.setMnemonic('E');
+        m_item_mana_Video.addActionListener(this);
+        m_item_mana_Video.setMnemonic('u');
+        m_item_mana_Standard.addActionListener(this);
+        m_item_mana_Standard.setMnemonic('C');
+        m_item_mana_Vip.addActionListener(this);
+        m_item_mana_Vip.setMnemonic('E');
         m_item_mana_Con.addActionListener(this);
         m_item_mana_Con.setMnemonic('C');
         m_item_mana_Search.addActionListener(this);
         m_item_mana_Search.setMnemonic('S');
-        menu_tool.add(m_item_mana_Stu);
-        menu_tool.add(m_item_mana_Cou);
-        menu_tool.add(m_item_mana_Enr);
+        menu_tool.add(m_item_mana_Video);
+        menu_tool.add(m_item_mana_Standard);
+        menu_tool.add(m_item_mana_Vip);
         menu_tool.add(m_item_mana_Con);
         menu_tool.add(m_item_mana_Search);
         menu_tool.setMnemonic('T');
         //Menu Report
         item_report1.addActionListener(this);
-        item_report1.setMnemonic('R');
+        item_report1.setMnemonic('A');
         item_report2.addActionListener(this);
-        item_report2.setMnemonic('A');
+        item_report2.setMnemonic('O');
+        item_report3.addActionListener(this);
+        item_report3.setMnemonic('S');
         menu_report.add(item_report1);
         menu_report.add(item_report2);
+        menu_report.add(item_report3);
         menu_report.setMnemonic('R');
         //add menus to menubar
         menu_main.add(menu_file);
@@ -245,6 +254,15 @@ public class VideoRentalDemo implements ActionListener {
                 break;
             case "Search for Object":
                 m_search.display();
+                break;
+            case "All Contracts":
+                m_contract.reportAll();
+                break;
+            case "Open Contracts":
+                m_contract.reportOpen();
+                break;
+            case "Sorted Open Contracts":
+                m_contract.reportSortedOpen();
                 break;
             default:
                 System.out.println("No command found!");

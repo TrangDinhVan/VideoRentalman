@@ -5,6 +5,7 @@
  */
 package Manager;
 
+import model.Vip;
 import java.awt.GridLayout;
 import java.io.EOFException;
 import java.io.File;
@@ -18,8 +19,7 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import videorentalman.NotPossibleException;
-import videorentalman.*;
+import videorentalman2.NotPossibleException;
 
 /**
  *

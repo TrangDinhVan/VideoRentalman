@@ -1,4 +1,7 @@
-package videorentalman;
+package model;
+
+import model.Document;
+import model.Account;
 
 public class Vip extends Account implements Document{
     private String address;

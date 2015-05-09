@@ -11,8 +11,8 @@ import javax.swing.JTextField;
 import kengine.Doc;
 import kengine.DocCnt;
 import javax.swing.table.TableColumn;
-import videorentalman.Document;
-import videorentalman.NotPossibleException;
+import model.Document;
+import videorentalman2.NotPossibleException;
 
 /**
  * @overview A sub-type of AppController that is responsible for handling object

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Manager;
-import videorentalman.NotPossibleException;
+import videorentalman2.NotPossibleException;
 
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;

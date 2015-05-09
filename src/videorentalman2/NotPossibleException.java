@@ -1,4 +1,4 @@
-package videorentalman;
+package videorentalman2;
 
 /**
  * OVERVIEW: a run-time exception that is (not expected to be) thrown 
