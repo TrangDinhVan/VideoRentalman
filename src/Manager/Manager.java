@@ -28,16 +28,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 /**
  *
- * @author Trang
+ * @author Khai
  */
 public abstract class Manager implements ActionListener {
     private String title;
     private String titleText;
     private int width, height;
     private int x, y;
-    private JFrame gui;
+    public JFrame gui;
     private Dimension dim;
     private Point location;
+    private JPanel p_middle;
     //Init with a basic GUI
     public Manager(String title, String titleText, int width, int height, int x, int y){
         this.title = title;
@@ -49,6 +50,10 @@ public abstract class Manager implements ActionListener {
     //Create GUI
     public void createGUI(){
         initGUI();
+        createFileMenu();
+        createTopPanel();
+        createMiddlePanel();
+        createBottomPanel();
     }
     //Init Basic GUI components
     public void initGUI(){
@@ -160,12 +165,20 @@ public abstract class Manager implements ActionListener {
             }
         }
     }
+    //Clear GUI when click Cancel button
     public abstract void clearGUI();
+    //Load data from file when start
+    public abstract void startUp();
+    //Save data to file when close
+    public abstract void save();
+    //Close form
     public void exit() {
         clearGUI();
         gui.setVisible(false);
     }
+    //Shutdown form
     public void shutDown() {
+        save();
         gui.dispose();
     }
 }
